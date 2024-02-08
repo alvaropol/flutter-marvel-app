@@ -91,13 +91,11 @@ class Results {
   String? issn;
   String? format;
   int? pageCount;
-  List<Null>? textObjects;
+  List<TextObjects>? textObjects;
   String? resourceURI;
   List<Urls>? urls;
   Series? series;
   List<Variants>? variants;
-  List<Null>? collections;
-  List<Null>? collectedIssues;
   List<Dates>? dates;
   List<Prices>? prices;
   Thumbnail? thumbnail;
@@ -127,8 +125,6 @@ class Results {
       this.urls,
       this.series,
       this.variants,
-      this.collections,
-      this.collectedIssues,
       this.dates,
       this.prices,
       this.thumbnail,
@@ -154,9 +150,9 @@ class Results {
     format = json['format'];
     pageCount = json['pageCount'];
     if (json['textObjects'] != null) {
-      textObjects = <Null>[];
+      textObjects = <TextObjects>[];
       json['textObjects'].forEach((v) {
-        textObjects!.add(new Null.fromJson(v));
+        textObjects!.add(new TextObjects.fromJson(v));
       });
     }
     resourceURI = json['resourceURI'];
@@ -172,18 +168,6 @@ class Results {
       variants = <Variants>[];
       json['variants'].forEach((v) {
         variants!.add(new Variants.fromJson(v));
-      });
-    }
-    if (json['collections'] != null) {
-      collections = <Null>[];
-      json['collections'].forEach((v) {
-        collections!.add(new Null.fromJson(v));
-      });
-    }
-    if (json['collectedIssues'] != null) {
-      collectedIssues = <Null>[];
-      json['collectedIssues'].forEach((v) {
-        collectedIssues!.add(new Null.fromJson(v));
       });
     }
     if (json['dates'] != null) {
@@ -247,13 +231,6 @@ class Results {
     }
     if (this.variants != null) {
       data['variants'] = this.variants!.map((v) => v.toJson()).toList();
-    }
-    if (this.collections != null) {
-      data['collections'] = this.collections!.map((v) => v.toJson()).toList();
-    }
-    if (this.collectedIssues != null) {
-      data['collectedIssues'] =
-          this.collectedIssues!.map((v) => v.toJson()).toList();
     }
     if (this.dates != null) {
       data['dates'] = this.dates!.map((v) => v.toJson()).toList();
@@ -502,25 +479,46 @@ class Variants {
   }
 }
 
-Class TextObjects{
+class TextObjects {
   String? type;
   String? language;
   String? text;
 
   TextObjects({this.type, this.language, this.text});
 
-  TextObjects.fromJson(Map(<String, dynamic> json)){
+  TextObjects.fromJson(Map<String, dynamic> json) {
     type = json['type'];
     language = json['language'];
     text = json['text'];
   }
 
-  Map<String, dynamic> toJson(){
+  Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['type'] = this.type;
     data['language'] = this.language;
-    data['language'] = this.language;
-    return data;    
+    data['text'] = this.text;
+    return data;
+  }
+}
+
+class Collections {
+  String? type;
+  String? language;
+  String? text;
+
+  Collections({this.type, this.language, this.text});
+
+  Collections.fromJson(Map<String, dynamic> json) {
+    type = json['type'];
+    language = json['language'];
+    text = json['text'];
   }
 
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['type'] = this.type;
+    data['language'] = this.language;
+    data['text'] = this.text;
+    return data;
+  }
 }
