@@ -46,7 +46,7 @@ class Data {
   int? limit;
   int? total;
   int? count;
-  List<Results>? results;
+  List<Comics>? results;
 
   Data({this.offset, this.limit, this.total, this.count, this.results});
 
@@ -56,9 +56,9 @@ class Data {
     total = json['total'];
     count = json['count'];
     if (json['results'] != null) {
-      results = <Results>[];
+      results = <Comics>[];
       json['results'].forEach((v) {
-        results!.add(new Results.fromJson(v));
+        results!.add(new Comics.fromJson(v));
       });
     }
   }
@@ -76,7 +76,7 @@ class Data {
   }
 }
 
-class Results {
+class Comics {
   int? id;
   int? digitalId;
   String? title;
@@ -105,7 +105,7 @@ class Results {
   Creators? stories;
   Characters? events;
 
-  Results(
+  Comics(
       {this.id,
       this.digitalId,
       this.title,
@@ -134,7 +134,7 @@ class Results {
       this.stories,
       this.events});
 
-  Results.fromJson(Map<String, dynamic> json) {
+  Comics.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     digitalId = json['digitalId'];
     title = json['title'];
