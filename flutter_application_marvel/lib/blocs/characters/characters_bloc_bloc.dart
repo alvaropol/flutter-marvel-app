@@ -20,7 +20,8 @@ class CharactersBlocBloc
   Future<FutureOr<void>> _onCharacterFetchList(
       CharacterFetchList event, Emitter<CharactersBlocState> emit) async {
     try {
-      final characterList = await characterRepository.fetchCharacterList();
+      final characterList =
+          await characterRepository.fetchCharacterList(event.offset);
       emit(CharacterFetchSuccess(characterList!));
     } on Exception catch (e) {
       emit(CharacterFetchError(e.toString()));

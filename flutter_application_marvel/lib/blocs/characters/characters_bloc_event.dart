@@ -4,5 +4,6 @@ part of 'characters_bloc_bloc.dart';
 sealed class CharactersBlocEvent {}
 
 class CharacterFetchList extends CharactersBlocEvent {
-  CharacterFetchList();
+  final int offset;
+  CharacterFetchList(this.offset);
 }
