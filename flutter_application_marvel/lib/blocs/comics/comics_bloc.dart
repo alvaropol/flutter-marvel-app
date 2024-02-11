@@ -15,8 +15,8 @@ class ComicsBloc extends Bloc<ComicsEvent, ComicsState> {
   void _onComicsFetchList(
       ComicsFetchList event, Emitter<ComicsState> emit) async {
     try {
-      final comicList = await comicRepository.fetchComics();
-      emit(ComicsFetchSucess(comicList));
+      final comicList = await comicRepository.fetchComics(event.offset);
+      emit(ComicsFetchSucess(comicList!));
       return;
     } on Exception catch (e) {
       emit(ComicsFetchError(e.toString()));

@@ -1,20 +1,20 @@
 class ComicsResponse {
-  int? code;
-  String? status;
-  String? copyright;
-  String? attributionText;
-  String? attributionHTML;
-  String? etag;
-  Data? data;
-
-  ComicsResponse(
-      {this.code,
-      this.status,
-      this.copyright,
-      this.attributionText,
-      this.attributionHTML,
-      this.etag,
-      this.data});
+  ComicsResponse({
+    required this.code,
+    required this.status,
+    required this.copyright,
+    required this.attributionText,
+    required this.attributionHTML,
+    required this.etag,
+    required this.data,
+  });
+  late final int code;
+  late final String status;
+  late final String copyright;
+  late final String attributionText;
+  late final String attributionHTML;
+  late final String etag;
+  late final Data data;
 
   ComicsResponse.fromJson(Map<String, dynamic> json) {
     code = json['code'];
@@ -23,468 +23,200 @@ class ComicsResponse {
     attributionText = json['attributionText'];
     attributionHTML = json['attributionHTML'];
     etag = json['etag'];
-    data = json['data'] != null ? new Data.fromJson(json['data']) : null;
+    data = Data.fromJson(json['data']);
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['code'] = this.code;
-    data['status'] = this.status;
-    data['copyright'] = this.copyright;
-    data['attributionText'] = this.attributionText;
-    data['attributionHTML'] = this.attributionHTML;
-    data['etag'] = this.etag;
-    if (this.data != null) {
-      data['data'] = this.data!.toJson();
-    }
-    return data;
+    final _data = <String, dynamic>{};
+    _data['code'] = code;
+    _data['status'] = status;
+    _data['copyright'] = copyright;
+    _data['attributionText'] = attributionText;
+    _data['attributionHTML'] = attributionHTML;
+    _data['etag'] = etag;
+    _data['data'] = data.toJson();
+    return _data;
   }
 }
 
 class Data {
-  int? offset;
-  int? limit;
-  int? total;
-  int? count;
-  List<Comics>? results;
-
-  Data({this.offset, this.limit, this.total, this.count, this.results});
+  Data({
+    required this.offset,
+    required this.limit,
+    required this.total,
+    required this.count,
+    required this.results,
+  });
+  late final int offset;
+  late final int limit;
+  late final int total;
+  late final int count;
+  late final List<Comics> results;
 
   Data.fromJson(Map<String, dynamic> json) {
     offset = json['offset'];
     limit = json['limit'];
     total = json['total'];
     count = json['count'];
-    if (json['results'] != null) {
-      results = <Comics>[];
-      json['results'].forEach((v) {
-        results!.add(new Comics.fromJson(v));
-      });
-    }
+    results =
+        List.from(json['results']).map((e) => Comics.fromJson(e)).toList();
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['offset'] = this.offset;
-    data['limit'] = this.limit;
-    data['total'] = this.total;
-    data['count'] = this.count;
-    if (this.results != null) {
-      data['results'] = this.results!.map((v) => v.toJson()).toList();
-    }
-    return data;
+    final _data = <String, dynamic>{};
+    _data['offset'] = offset;
+    _data['limit'] = limit;
+    _data['total'] = total;
+    _data['count'] = count;
+    _data['results'] = results.map((e) => e.toJson()).toList();
+    return _data;
   }
 }
 
 class Comics {
-  int? id;
-  int? digitalId;
-  String? title;
-  int? issueNumber;
-  String? variantDescription;
-  String? description;
-  String? modified;
-  String? isbn;
-  String? upc;
-  String? diamondCode;
-  String? ean;
-  String? issn;
-  String? format;
-  int? pageCount;
-  List<TextObjects>? textObjects;
-  String? resourceURI;
-  List<Urls>? urls;
-  Series? series;
-  List<Variants>? variants;
-  List<Dates>? dates;
-  List<Prices>? prices;
-  Thumbnail? thumbnail;
-  List<Images>? images;
-  Creators? creators;
-  Characters? characters;
-  Creators? stories;
-  Characters? events;
-
-  Comics(
-      {this.id,
-      this.digitalId,
-      this.title,
-      this.issueNumber,
-      this.variantDescription,
-      this.description,
-      this.modified,
-      this.isbn,
-      this.upc,
-      this.diamondCode,
-      this.ean,
-      this.issn,
-      this.format,
-      this.pageCount,
-      this.textObjects,
-      this.resourceURI,
-      this.urls,
-      this.series,
-      this.variants,
-      this.dates,
-      this.prices,
-      this.thumbnail,
-      this.images,
-      this.creators,
-      this.characters,
-      this.stories,
-      this.events});
+  Comics({
+    required this.id,
+    required this.digitalId,
+    required this.title,
+    required this.issueNumber,
+    required this.variantDescription,
+    this.description,
+    required this.modified,
+    required this.isbn,
+    required this.upc,
+    required this.diamondCode,
+    required this.ean,
+    required this.issn,
+    required this.format,
+    required this.pageCount,
+    required this.textObjects,
+    required this.resourceURI,
+    required this.urls,
+    required this.series,
+    required this.variants,
+    required this.collections,
+    required this.collectedIssues,
+    required this.dates,
+    required this.prices,
+    required this.thumbnail,
+    required this.images,
+    required this.creators,
+    required this.characters,
+    required this.stories,
+    required this.events,
+  });
+  late final int id;
+  late final int digitalId;
+  late final String title;
+  late final int issueNumber;
+  late final String variantDescription;
+  late final String? description;
+  late final String modified;
+  late final String isbn;
+  late final String upc;
+  late final String diamondCode;
+  late final String ean;
+  late final String issn;
+  late final String format;
+  late final int pageCount;
+  late final List<TextObjects> textObjects;
+  late final String resourceURI;
+  late final List<Urls> urls;
+  late final Series series;
+  late final List<Variants> variants;
+  late final List<dynamic> collections;
+  late final List<CollectedIssues> collectedIssues;
+  late final List<Dates> dates;
+  late final List<Prices> prices;
+  late final Thumbnail thumbnail;
+  late final List<Images> images;
+  late final Creators creators;
+  late final Characters characters;
+  late final Stories stories;
+  late final Events events;
 
   Comics.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     digitalId = json['digitalId'];
     title = json['title'];
     issueNumber = json['issueNumber'];
-    variantDescription = json['variantDescription'];
-    description = json['description'];
+    variantDescription =
+        json['variantDescription'] ?? ''; // Valor por defecto si es null
+    description = json['description']; // Ya es nullable
     modified = json['modified'];
-    isbn = json['isbn'];
-    upc = json['upc'];
-    diamondCode = json['diamondCode'];
-    ean = json['ean'];
-    issn = json['issn'];
-    format = json['format'];
+    isbn = json['isbn'] ?? ''; // Valor por defecto si es null
+    upc = json['upc'] ?? ''; // Valor por defecto si es null
+    diamondCode = json['diamondCode'] ?? ''; // Valor por defecto si es null
+    ean = json['ean'] ?? ''; // Valor por defecto si es null
+    issn = json['issn'] ?? ''; // Valor por defecto si es null
+    format = json['format'] ?? ''; // Valor por defecto si es null
     pageCount = json['pageCount'];
-    if (json['textObjects'] != null) {
-      textObjects = <TextObjects>[];
-      json['textObjects'].forEach((v) {
-        textObjects!.add(new TextObjects.fromJson(v));
-      });
-    }
+    textObjects = (json['textObjects'] as List)
+        .map((e) => TextObjects.fromJson(e))
+        .toList();
     resourceURI = json['resourceURI'];
-    if (json['urls'] != null) {
-      urls = <Urls>[];
-      json['urls'].forEach((v) {
-        urls!.add(new Urls.fromJson(v));
-      });
-    }
-    series =
-        json['series'] != null ? new Series.fromJson(json['series']) : null;
-    if (json['variants'] != null) {
-      variants = <Variants>[];
-      json['variants'].forEach((v) {
-        variants!.add(new Variants.fromJson(v));
-      });
-    }
-    if (json['dates'] != null) {
-      dates = <Dates>[];
-      json['dates'].forEach((v) {
-        dates!.add(new Dates.fromJson(v));
-      });
-    }
-    if (json['prices'] != null) {
-      prices = <Prices>[];
-      json['prices'].forEach((v) {
-        prices!.add(new Prices.fromJson(v));
-      });
-    }
-    thumbnail = json['thumbnail'] != null
-        ? new Thumbnail.fromJson(json['thumbnail'])
-        : null;
-    if (json['images'] != null) {
-      images = <Images>[];
-      json['images'].forEach((v) {
-        images!.add(new Images.fromJson(v));
-      });
-    }
-    creators = json['creators'] != null
-        ? new Creators.fromJson(json['creators'])
-        : null;
-    characters = json['characters'] != null
-        ? new Characters.fromJson(json['characters'])
-        : null;
-    stories =
-        json['stories'] != null ? new Creators.fromJson(json['stories']) : null;
-    events =
-        json['events'] != null ? new Characters.fromJson(json['events']) : null;
+    urls = (json['urls'] as List).map((e) => Urls.fromJson(e)).toList();
+    series = Series.fromJson(json['series']);
+    variants =
+        (json['variants'] as List).map((e) => Variants.fromJson(e)).toList();
+    collections = json['collections'] ?? []; // Lista vacía si es null
+    collectedIssues = (json['collectedIssues'] as List)
+        .map((e) => CollectedIssues.fromJson(e))
+        .toList();
+    dates = (json['dates'] as List).map((e) => Dates.fromJson(e)).toList();
+    prices = (json['prices'] as List).map((e) => Prices.fromJson(e)).toList();
+    thumbnail = Thumbnail.fromJson(json['thumbnail']);
+    images = (json['images'] as List).map((e) => Images.fromJson(e)).toList();
+    creators = Creators.fromJson(json['creators']);
+    characters = Characters.fromJson(json['characters']);
+    stories = Stories.fromJson(json['stories']);
+    events = Events.fromJson(json['events']);
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['id'] = this.id;
-    data['digitalId'] = this.digitalId;
-    data['title'] = this.title;
-    data['issueNumber'] = this.issueNumber;
-    data['variantDescription'] = this.variantDescription;
-    data['description'] = this.description;
-    data['modified'] = this.modified;
-    data['isbn'] = this.isbn;
-    data['upc'] = this.upc;
-    data['diamondCode'] = this.diamondCode;
-    data['ean'] = this.ean;
-    data['issn'] = this.issn;
-    data['format'] = this.format;
-    data['pageCount'] = this.pageCount;
-    if (this.textObjects != null) {
-      data['textObjects'] = this.textObjects!.map((v) => v.toJson()).toList();
-    }
-    data['resourceURI'] = this.resourceURI;
-    if (this.urls != null) {
-      data['urls'] = this.urls!.map((v) => v.toJson()).toList();
-    }
-    if (this.series != null) {
-      data['series'] = this.series!.toJson();
-    }
-    if (this.variants != null) {
-      data['variants'] = this.variants!.map((v) => v.toJson()).toList();
-    }
-    if (this.dates != null) {
-      data['dates'] = this.dates!.map((v) => v.toJson()).toList();
-    }
-    if (this.prices != null) {
-      data['prices'] = this.prices!.map((v) => v.toJson()).toList();
-    }
-    if (this.thumbnail != null) {
-      data['thumbnail'] = this.thumbnail!.toJson();
-    }
-    if (this.images != null) {
-      data['images'] = this.images!.map((v) => v.toJson()).toList();
-    }
-    if (this.creators != null) {
-      data['creators'] = this.creators!.toJson();
-    }
-    if (this.characters != null) {
-      data['characters'] = this.characters!.toJson();
-    }
-    if (this.stories != null) {
-      data['stories'] = this.stories!.toJson();
-    }
-    if (this.events != null) {
-      data['events'] = this.events!.toJson();
-    }
-    return data;
-  }
-}
-
-class Urls {
-  String? type;
-  String? url;
-
-  Urls({this.type, this.url});
-
-  Urls.fromJson(Map<String, dynamic> json) {
-    type = json['type'];
-    url = json['url'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['type'] = this.type;
-    data['url'] = this.url;
-    return data;
-  }
-}
-
-class Series {
-  String? resourceURI;
-  String? name;
-
-  Series({this.resourceURI, this.name});
-
-  Series.fromJson(Map<String, dynamic> json) {
-    resourceURI = json['resourceURI'];
-    name = json['name'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['resourceURI'] = this.resourceURI;
-    data['name'] = this.name;
-    return data;
-  }
-}
-
-class Dates {
-  String? type;
-  String? date;
-
-  Dates({this.type, this.date});
-
-  Dates.fromJson(Map<String, dynamic> json) {
-    type = json['type'];
-    date = json['date'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['type'] = this.type;
-    data['date'] = this.date;
-    return data;
-  }
-}
-
-class Prices {
-  String? type;
-  int? price;
-
-  Prices({this.type, this.price});
-
-  Prices.fromJson(Map<String, dynamic> json) {
-    type = json['type'];
-    price = json['price'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['type'] = this.type;
-    data['price'] = this.price;
-    return data;
-  }
-}
-
-class Thumbnail {
-  String? path;
-  String? extension;
-
-  Thumbnail({this.path, this.extension});
-
-  Thumbnail.fromJson(Map<String, dynamic> json) {
-    path = json['path'];
-    extension = json['extension'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['path'] = this.path;
-    data['extension'] = this.extension;
-    return data;
-  }
-}
-
-class Creators {
-  int? available;
-  String? collectionURI;
-  List<Items>? items;
-  int? returned;
-
-  Creators({this.available, this.collectionURI, this.items, this.returned});
-
-  Creators.fromJson(Map<String, dynamic> json) {
-    available = json['available'];
-    collectionURI = json['collectionURI'];
-    if (json['items'] != null) {
-      items = <Items>[];
-      json['items'].forEach((v) {
-        items!.add(new Items.fromJson(v));
-      });
-    }
-    returned = json['returned'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['available'] = this.available;
-    data['collectionURI'] = this.collectionURI;
-    if (this.items != null) {
-      data['items'] = this.items!.map((v) => v.toJson()).toList();
-    }
-    data['returned'] = this.returned;
-    return data;
-  }
-}
-
-class Items {
-  String? resourceURI;
-  String? name;
-  String? role;
-
-  Items({this.resourceURI, this.name, this.role});
-
-  Items.fromJson(Map<String, dynamic> json) {
-    resourceURI = json['resourceURI'];
-    name = json['name'];
-    role = json['role'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['resourceURI'] = this.resourceURI;
-    data['name'] = this.name;
-    data['role'] = this.role;
-    return data;
-  }
-}
-
-class Characters {
-  int? available;
-  String? collectionURI;
-  List<Items>? items;
-  int? returned;
-
-  Characters({this.available, this.collectionURI, this.items, this.returned});
-
-  Characters.fromJson(Map<String, dynamic> json) {
-    available = json['available'];
-    collectionURI = json['collectionURI'];
-    if (json['items'] != null) {
-      items = <Items>[];
-      json['items'].forEach((v) {
-        items!.add(new Items.fromJson(v));
-      });
-    }
-    returned = json['returned'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['available'] = this.available;
-    data['collectionURI'] = this.collectionURI;
-    if (this.items != null) {
-      data['items'] = this.items!.map((v) => v.toJson()).toList();
-    }
-    data['returned'] = this.returned;
-    return data;
-  }
-}
-
-class Images {
-  String? path;
-  String? extension;
-
-  Images({this.path, this.extension});
-
-  Images.fromJson(Map<String, dynamic> json) {
-    path = json['path'];
-    extension = json['extension'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['path'] = this.path;
-    data['extension'] = this.extension;
-    return data;
-  }
-}
-
-class Variants {
-  String? resourceURI;
-  String? name;
-
-  Variants({this.resourceURI, this.name});
-
-  Variants.fromJson(Map<String, dynamic> json) {
-    resourceURI = json['resourceURI'];
-    name = json['name'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['resourceURI'] = this.resourceURI;
-    data['name'] = this.name;
-    return data;
+    final _data = <String, dynamic>{};
+    _data['id'] = id;
+    _data['digitalId'] = digitalId;
+    _data['title'] = title;
+    _data['issueNumber'] = issueNumber;
+    _data['variantDescription'] = variantDescription;
+    _data['description'] = description;
+    _data['modified'] = modified;
+    _data['isbn'] = isbn;
+    _data['upc'] = upc;
+    _data['diamondCode'] = diamondCode;
+    _data['ean'] = ean;
+    _data['issn'] = issn;
+    _data['format'] = format;
+    _data['pageCount'] = pageCount;
+    _data['textObjects'] = textObjects.map((e) => e.toJson()).toList();
+    _data['resourceURI'] = resourceURI;
+    _data['urls'] = urls.map((e) => e.toJson()).toList();
+    _data['series'] = series.toJson();
+    _data['variants'] = variants.map((e) => e.toJson()).toList();
+    _data['collections'] = collections;
+    _data['collectedIssues'] = collectedIssues.map((e) => e.toJson()).toList();
+    _data['dates'] = dates.map((e) => e.toJson()).toList();
+    _data['prices'] = prices.map((e) => e.toJson()).toList();
+    _data['thumbnail'] = thumbnail.toJson();
+    _data['images'] = images.map((e) => e.toJson()).toList();
+    _data['creators'] = creators.toJson();
+    _data['characters'] = characters.toJson();
+    _data['stories'] = stories.toJson();
+    _data['events'] = events.toJson();
+    return _data;
   }
 }
 
 class TextObjects {
-  String? type;
-  String? language;
-  String? text;
-
-  TextObjects({this.type, this.language, this.text});
+  TextObjects({
+    required this.type,
+    required this.language,
+    required this.text,
+  });
+  late final String type;
+  late final String language;
+  late final String text;
 
   TextObjects.fromJson(Map<String, dynamic> json) {
     type = json['type'];
@@ -493,32 +225,325 @@ class TextObjects {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['type'] = this.type;
-    data['language'] = this.language;
-    data['text'] = this.text;
-    return data;
+    final _data = <String, dynamic>{};
+    _data['type'] = type;
+    _data['language'] = language;
+    _data['text'] = text;
+    return _data;
   }
 }
 
-class Collections {
-  String? type;
-  String? language;
-  String? text;
+class Urls {
+  Urls({
+    required this.type,
+    required this.url,
+  });
+  late final String type;
+  late final String url;
 
-  Collections({this.type, this.language, this.text});
-
-  Collections.fromJson(Map<String, dynamic> json) {
+  Urls.fromJson(Map<String, dynamic> json) {
     type = json['type'];
-    language = json['language'];
-    text = json['text'];
+    url = json['url'];
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['type'] = this.type;
-    data['language'] = this.language;
-    data['text'] = this.text;
-    return data;
+    final _data = <String, dynamic>{};
+    _data['type'] = type;
+    _data['url'] = url;
+    return _data;
+  }
+}
+
+class Series {
+  Series({
+    required this.resourceURI,
+    required this.name,
+  });
+  late final String resourceURI;
+  late final String name;
+
+  Series.fromJson(Map<String, dynamic> json) {
+    resourceURI = json['resourceURI'];
+    name = json['name'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final _data = <String, dynamic>{};
+    _data['resourceURI'] = resourceURI;
+    _data['name'] = name;
+    return _data;
+  }
+}
+
+class Variants {
+  Variants({
+    required this.resourceURI,
+    required this.name,
+  });
+  late final String resourceURI;
+  late final String name;
+
+  Variants.fromJson(Map<String, dynamic> json) {
+    resourceURI = json['resourceURI'];
+    name = json['name'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final _data = <String, dynamic>{};
+    _data['resourceURI'] = resourceURI;
+    _data['name'] = name;
+    return _data;
+  }
+}
+
+class CollectedIssues {
+  CollectedIssues({
+    required this.resourceURI,
+    required this.name,
+  });
+  late final String resourceURI;
+  late final String name;
+
+  CollectedIssues.fromJson(Map<String, dynamic> json) {
+    resourceURI = json['resourceURI'];
+    name = json['name'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final _data = <String, dynamic>{};
+    _data['resourceURI'] = resourceURI;
+    _data['name'] = name;
+    return _data;
+  }
+}
+
+class Dates {
+  Dates({
+    required this.type,
+    required this.date,
+  });
+  late final String type;
+  late final String date;
+
+  Dates.fromJson(Map<String, dynamic> json) {
+    type = json['type'];
+    date = json['date'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final _data = <String, dynamic>{};
+    _data['type'] = type;
+    _data['date'] = date;
+    return _data;
+  }
+}
+
+class Prices {
+  Prices({
+    required this.type,
+    this.price, // Cambiado a double? para permitir valores nulos y de punto flotante
+  });
+  late final String type;
+  late final double? price; // Permitir valores nulos y de punto flotante
+
+  Prices.fromJson(Map<String, dynamic> json) {
+    type = json['type'];
+    // Se verifica si el precio es null, en cuyo caso se deja como null,
+    // de lo contrario, se convierte a double con toDouble(),
+    // permitiendo que sea un valor de punto flotante.
+    price = json['price']?.toDouble(); // Convertir a double si no es null
+  }
+
+  Map<String, dynamic> toJson() {
+    final _data = <String, dynamic>{};
+    _data['type'] = type;
+    _data['price'] = price;
+    return _data;
+  }
+}
+
+class Thumbnail {
+  Thumbnail({
+    required this.path,
+    required this.extension,
+  });
+  late final String path;
+  late final String extension;
+
+  Thumbnail.fromJson(Map<String, dynamic> json) {
+    path = json['path'];
+    extension = json['extension'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final _data = <String, dynamic>{};
+    _data['path'] = path;
+    _data['extension'] = extension;
+    return _data;
+  }
+}
+
+class Images {
+  Images({
+    required this.path,
+    required this.extension,
+  });
+  late final String path;
+  late final String extension;
+
+  Images.fromJson(Map<String, dynamic> json) {
+    path = json['path'];
+    extension = json['extension'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final _data = <String, dynamic>{};
+    _data['path'] = path;
+    _data['extension'] = extension;
+    return _data;
+  }
+}
+
+class Creators {
+  Creators({
+    required this.available,
+    required this.collectionURI,
+    required this.items,
+    required this.returned,
+  });
+  late final int available;
+  late final String collectionURI;
+  late final List<Items> items;
+  late final int returned;
+
+  Creators.fromJson(Map<String, dynamic> json) {
+    available = json['available'];
+    collectionURI = json['collectionURI'];
+    items = List.from(json['items']).map((e) => Items.fromJson(e)).toList();
+    returned = json['returned'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final _data = <String, dynamic>{};
+    _data['available'] = available;
+    _data['collectionURI'] = collectionURI;
+    _data['items'] = items.map((e) => e.toJson()).toList();
+    _data['returned'] = returned;
+    return _data;
+  }
+}
+
+class Items {
+  Items({
+    required this.resourceURI,
+    required this.name,
+    required this.role,
+  });
+  late final String resourceURI;
+  late final String name;
+  late final String role;
+
+  Items.fromJson(Map<String, dynamic> json) {
+    resourceURI = json['resourceURI'] as String? ??
+        ''; // Proporciona un valor predeterminado si es null
+    name = json['name'] as String? ??
+        ''; // Proporciona un valor predeterminado si es null
+    role = json['role'] as String? ??
+        ''; // Proporciona un valor predeterminado si es null
+  }
+
+  Map<String, dynamic> toJson() {
+    final _data = <String, dynamic>{};
+    _data['resourceURI'] = resourceURI;
+    _data['name'] = name;
+    _data['role'] = role;
+    return _data;
+  }
+}
+
+class Characters {
+  Characters({
+    required this.available,
+    required this.collectionURI,
+    required this.items,
+    required this.returned,
+  });
+  late final int available;
+  late final String collectionURI;
+  late final List<Items> items;
+  late final int returned;
+
+  Characters.fromJson(Map<String, dynamic> json) {
+    available = json['available'];
+    collectionURI = json['collectionURI'];
+    items = List.from(json['items']).map((e) => Items.fromJson(e)).toList();
+    returned = json['returned'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final _data = <String, dynamic>{};
+    _data['available'] = available;
+    _data['collectionURI'] = collectionURI;
+    _data['items'] = items.map((e) => e.toJson()).toList();
+    _data['returned'] = returned;
+    return _data;
+  }
+}
+
+class Stories {
+  Stories({
+    required this.available,
+    required this.collectionURI,
+    required this.items,
+    required this.returned,
+  });
+  late final int available;
+  late final String collectionURI;
+  late final List<Items> items;
+  late final int returned;
+
+  Stories.fromJson(Map<String, dynamic> json) {
+    available = json['available'];
+    collectionURI = json['collectionURI'];
+    items = List.from(json['items']).map((e) => Items.fromJson(e)).toList();
+    returned = json['returned'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final _data = <String, dynamic>{};
+    _data['available'] = available;
+    _data['collectionURI'] = collectionURI;
+    _data['items'] = items.map((e) => e.toJson()).toList();
+    _data['returned'] = returned;
+    return _data;
+  }
+}
+
+class Events {
+  Events({
+    required this.available,
+    required this.collectionURI,
+    required this.items,
+    required this.returned,
+  });
+  late final int available;
+  late final String collectionURI;
+  late final List<dynamic> items;
+  late final int returned;
+
+  Events.fromJson(Map<String, dynamic> json) {
+    available = json['available'];
+    collectionURI = json['collectionURI'];
+    items = List.castFrom<dynamic, dynamic>(json['items']);
+    returned = json['returned'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final _data = <String, dynamic>{};
+    _data['available'] = available;
+    _data['collectionURI'] = collectionURI;
+    _data['items'] = items;
+    _data['returned'] = returned;
+    return _data;
   }
 }
