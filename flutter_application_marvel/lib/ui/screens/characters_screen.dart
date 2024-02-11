@@ -17,62 +17,109 @@ class CharactersScreen extends StatefulWidget {
 }
 
 class _CharactersScreenState extends State<CharactersScreen> {
+  int offset = 0;
   late CharacterRepository characterRepository;
+  late CharactersBlocBloc _characterBloc;
 
   @override
   void initState() {
     super.initState();
     characterRepository = CharacterRepositoryImpl();
+    _characterBloc = CharactersBlocBloc(characterRepository)
+      ..add(CharacterFetchList(offset));
   }
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-        create: (context) =>
-            CharactersBlocBloc(characterRepository)..add(CharacterFetchList()),
+    return BlocProvider.value(
+        value: _characterBloc,
         child: Scaffold(
           appBar: AppBar(
             title: const Text('Characters of Marvel'),
           ),
-          body: _movieList(),
+          body: _characterList(),
         ));
   }
 
-  Widget _movieList() {
-    return BlocBuilder<CharactersBlocBloc, CharactersBlocState>(
-      builder: (context, state) {
-        if (state is CharacterFetchSuccess) {
-          return ListView.builder(
-              itemCount: state.characterList.length,
-              itemBuilder: (context, index) {
-                String image =
-                    "${state.characterList[index].thumbnail!.path}.${state.characterList[index].thumbnail!.extension}";
-                return GFCard(
-                  boxFit: BoxFit.cover,
-                  image: Image.network(image),
-                  title: GFListTile(
-                    avatar: GFAvatar(
-                      backgroundImage: NetworkImage(image),
-                    ),
-                    title: Text(state.characterList[index].name!),
-                  ),
-                  content: Text(state.characterList[index].description!),
-                  buttonBar: GFButtonBar(
-                    children: <Widget>[
-                      GFButton(
-                        onPressed: () {},
-                        text: 'Details',
-                      ),
-                    ],
-                  ),
-                );
+  Widget _characterList() {
+    return Column(
+      children: [
+        if (offset != 0)
+          ElevatedButton(
+            onPressed: () {
+              setState(() {
+                offset -= 20;
               });
-        } else if (state is CharacterFetchError) {
-          return Text(state.errorMessage);
-        } else {
-          return const CircularProgressIndicator();
-        }
-      },
+              _characterBloc = CharactersBlocBloc(characterRepository)
+                ..add(CharacterFetchList(offset));
+            },
+            child: const Text('Return to the other characters'),
+          ),
+        const SizedBox(height: 20),
+        ElevatedButton(
+          onPressed: () {
+            setState(() {
+              offset += 20;
+            });
+            _characterBloc = CharactersBlocBloc(characterRepository)
+              ..add(CharacterFetchList(offset));
+          },
+          child: const Text('Show next characters'),
+        ),
+        Expanded(
+          child: BlocBuilder<CharactersBlocBloc, CharactersBlocState>(
+            builder: (context, state) {
+              if (state is CharacterFetchSuccess) {
+                return ListView.builder(
+                  itemCount: state.characterList.length,
+                  itemBuilder: (context, index) {
+                    String image =
+                        "${state.characterList[index].thumbnail!.path}.${state.characterList[index].thumbnail!.extension}";
+                    return Padding(
+                      padding: const EdgeInsets.all(10.0),
+                      child: Container(
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            image: NetworkImage(image),
+                            fit: BoxFit.cover,
+                          ),
+                          color: Colors.white
+                              .withOpacity(0.5), // Fondo transparente blanco
+                        ),
+                        child: GFCard(
+                          title: GFListTile(
+                            avatar: GFAvatar(
+                              backgroundImage: NetworkImage(image),
+                            ),
+                            title: Text(state.characterList[index].name!),
+                          ),
+                          content: Text(
+                            state.characterList[index].description == ""
+                                ? 'No description data'
+                                : state.characterList[index].description!,
+                          ),
+                          buttonBar: GFButtonBar(
+                            children: <Widget>[
+                              GFButton(
+                                onPressed: () {},
+                                text: 'Details',
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    );
+                  },
+                );
+              } else if (state is CharacterFetchError) {
+                return Text(state.errorMessage);
+              } else {
+                return const RefreshProgressIndicator();
+              }
+            },
+          ),
+        ),
+      ],
     );
   }
 }
