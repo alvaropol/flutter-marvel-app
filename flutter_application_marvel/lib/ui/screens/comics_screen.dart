@@ -93,7 +93,10 @@ class _ComicsScreenState extends State<ComicsScreen> {
                             : state.comicsList[index].description!),
                         buttonBar: GFButtonBar(children: <Widget>[
                           GFButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.push(
+                                  context, MaterialPageRoute(builder: builder));
+                            },
                             text: 'Details',
                           )
                         ]),
