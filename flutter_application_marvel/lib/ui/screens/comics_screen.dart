@@ -91,15 +91,6 @@ class _ComicsScreenState extends State<ComicsScreen> {
                         content: Text(state.comicsList[index].description == ""
                             ? 'No description'
                             : state.comicsList[index].description!),
-                        buttonBar: GFButtonBar(children: <Widget>[
-                          GFButton(
-                            onPressed: () {
-                              Navigator.push(
-                                  context, MaterialPageRoute(builder: builder));
-                            },
-                            text: 'Details',
-                          )
-                        ]),
                       ),
                     ),
                   );

@@ -7,3 +7,8 @@ class ComicsFetchList extends ComicsEvent {
   final int offset;
   ComicsFetchList(this.offset);
 }
+
+class ComicFetchDetail extends ComicsEvent {
+  final int id;
+  ComicFetchDetail(this.id);
+}
