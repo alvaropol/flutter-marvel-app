@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:flutter_application_marvel/models/character_response/character_response.dart';
+import 'package:flutter_application_marvel/models/character_response/detail_character_response.dart';
 import 'package:flutter_application_marvel/repositories/characters/character_repository.dart';
 import 'package:meta/meta.dart';
 
@@ -15,6 +16,7 @@ class CharactersBlocBloc
   CharactersBlocBloc(this.characterRepository)
       : super(CharactersBlocInitial()) {
     on<CharacterFetchList>(_onCharacterFetchList);
+    on<CharacterFetchDetail>(_onCharacterFetchDetail);
   }
 
   Future<FutureOr<void>> _onCharacterFetchList(
@@ -23,6 +25,17 @@ class CharactersBlocBloc
       final characterList =
           await characterRepository.fetchCharacterList(event.offset);
       emit(CharacterFetchSuccess(characterList!));
+    } on Exception catch (e) {
+      emit(CharacterFetchError(e.toString()));
+    }
+  }
+
+  Future<FutureOr<void>> _onCharacterFetchDetail(
+      CharacterFetchDetail event, Emitter<CharactersBlocState> emit) async {
+    try {
+      final character =
+          await characterRepository.fetchCharacterDetail(event.characterId);
+      emit(CharacterDetailFetchSuccess(character!));
     } on Exception catch (e) {
       emit(CharacterFetchError(e.toString()));
     }
