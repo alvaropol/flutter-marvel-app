@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_marvel/blocs/comics/comics_bloc.dart';
 import 'package:flutter_application_marvel/repositories/comics/comic_repository.dart';
 import 'package:flutter_application_marvel/repositories/comics/comic_repository_impl.dart';
+import 'package:flutter_application_marvel/ui/screens/cocmic_detail_screen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:getwidget/components/avatar/gf_avatar.dart';
 import 'package:getwidget/components/button/gf_button.dart';
@@ -88,9 +89,23 @@ class _ComicsScreenState extends State<ComicsScreen> {
                           ),
                           title: Text(state.comicsList[index].title!),
                         ),
-                        content: Text(state.comicsList[index].description == ""
-                            ? 'No description'
-                            : state.comicsList[index].description!),
+                        content: Text(
+                            'Modified: ${state.comicsList[index].modified}'),
+                        buttonBar: GFButtonBar(
+                          children: <Widget>[
+                            GFButton(
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => ComicDetailScreen(
+                                            comicId: state.comicsList[index].id,
+                                            comicTitle: state
+                                                .comicsList[index].title)));
+                              },
+                            )
+                          ],
+                        ),
                       ),
                     ),
                   );
