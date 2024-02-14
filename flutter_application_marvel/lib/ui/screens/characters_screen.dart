@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_marvel/blocs/characters/characters_bloc_bloc.dart';
 import 'package:flutter_application_marvel/repositories/characters/character_repository.dart';
 import 'package:flutter_application_marvel/repositories/characters/character_repository_impl.dart';
+import 'package:flutter_application_marvel/ui/screens/character_detail_screen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:getwidget/components/avatar/gf_avatar.dart';
 import 'package:getwidget/components/button/gf_button.dart';
@@ -83,8 +84,7 @@ class _CharactersScreenState extends State<CharactersScreen> {
                             image: NetworkImage(image),
                             fit: BoxFit.cover,
                           ),
-                          color: Colors.white
-                              .withOpacity(0.5), // Fondo transparente blanco
+                          color: Colors.white.withOpacity(0.5),
                         ),
                         child: GFCard(
                           title: GFListTile(
@@ -94,14 +94,24 @@ class _CharactersScreenState extends State<CharactersScreen> {
                             title: Text(state.characterList[index].name!),
                           ),
                           content: Text(
-                            state.characterList[index].description == ""
-                                ? 'No description data'
-                                : state.characterList[index].description!,
-                          ),
+                              'Modified: ${state.characterList[index].modified!}'),
                           buttonBar: GFButtonBar(
                             children: <Widget>[
                               GFButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) =>
+                                          DetailCharacterScreen(
+                                        characterId:
+                                            state.characterList[index].id!,
+                                        nameCharacter:
+                                            state.characterList[index].name!,
+                                      ),
+                                    ),
+                                  );
+                                },
                                 text: 'Details',
                               ),
                             ],

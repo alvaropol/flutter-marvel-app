@@ -14,3 +14,8 @@ final class CharacterFetchError extends CharactersBlocState {
   final String errorMessage;
   CharacterFetchError(this.errorMessage);
 }
+
+final class CharacterDetailFetchSuccess extends CharactersBlocState {
+  final List<Results> character;
+  CharacterDetailFetchSuccess(this.character);
+}
