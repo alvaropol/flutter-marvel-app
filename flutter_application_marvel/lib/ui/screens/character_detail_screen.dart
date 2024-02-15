@@ -3,9 +3,6 @@ import 'package:flutter_application_marvel/blocs/characters/characters_bloc_bloc
 import 'package:flutter_application_marvel/repositories/characters/character_repository.dart';
 import 'package:flutter_application_marvel/repositories/characters/character_repository_impl.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:getwidget/components/avatar/gf_avatar.dart';
-import 'package:getwidget/components/card/gf_card.dart';
-import 'package:getwidget/components/list_tile/gf_list_tile.dart';
 
 class DetailCharacterScreen extends StatefulWidget {
   final int characterId;
@@ -55,33 +52,98 @@ class _DetailCharacterScreenState extends State<DetailCharacterScreen> {
                     String image =
                         "${state.character[index].thumbnail!.path}.${state.character[index].thumbnail!.extension}";
                     return Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          image: DecorationImage(
-                            image: NetworkImage(image),
-                            fit: BoxFit.cover,
-                          ),
-                          color: Colors.white.withOpacity(0.5),
+                      padding: const EdgeInsets.all(7.0),
+                      child: Card(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15.0),
                         ),
-                        child: GFCard(
-                            title: GFListTile(
-                              avatar: GFAvatar(
-                                backgroundImage: NetworkImage(image),
+                        child: ClipRect(
+                          child: Stack(
+                            children: [
+                              const Center(
+                                child: CircularProgressIndicator(),
                               ),
-                              title: Text(state.character[index].name!),
-                            ),
-                            content: Column(
-                              children: <Widget>[
-                                Text(
-                                  state.character[index].description == ""
-                                      ? 'No description data'
-                                      : state.character[index].description!,
+                              Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(15.0),
+                                  image: DecorationImage(
+                                    image: NetworkImage(image),
+                                    fit: BoxFit.cover,
+                                  ),
                                 ),
-                                Text(
-                                    'Resource URI: ${state.character[index].resourceURI!}')
-                              ],
-                            )),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(15.0),
+                                    color: Colors.black.withOpacity(0.6),
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Stack(
+                                      children: [
+                                        Column(
+                                          children: [
+                                            ListTile(
+                                              title: Text(
+                                                state.character[index].name!,
+                                                style: const TextStyle(
+                                                    color: Colors.white,
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 20),
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.all(16.0),
+                                              child: Text(
+                                                '${state.character[index].name!} appears in  ${state.character[index].comics?.available} comics',
+                                                style: const TextStyle(
+                                                    color: Colors.white),
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.all(16.0),
+                                              child: Text(
+                                                '${state.character[index].name!} appears in  ${state.character[index].series?.available} series',
+                                                style: const TextStyle(
+                                                    color: Colors.white),
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.all(50.0),
+                                              child: Text(
+                                                state.character[index]
+                                                            .description ==
+                                                        ""
+                                                    ? 'No description data'
+                                                    : state.character[index]
+                                                        .description!,
+                                                style: const TextStyle(
+                                                  color: Colors.white,
+                                                ),
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.all(50.0),
+                                              child: Text(
+                                                'Resource URI: ${state.character[index].resourceURI!}',
+                                                style: const TextStyle(
+                                                  color: Colors.white,
+                                                ),
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
                     );
                   },
