@@ -3,9 +3,6 @@ import 'package:flutter_application_marvel/blocs/comics/comics_bloc.dart';
 import 'package:flutter_application_marvel/repositories/comics/comic_repository.dart';
 import 'package:flutter_application_marvel/repositories/comics/comic_repository_impl.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:getwidget/components/avatar/gf_avatar.dart';
-import 'package:getwidget/components/card/gf_card.dart';
-import 'package:getwidget/components/list_tile/gf_list_tile.dart';
 
 class ComicDetailScreen extends StatefulWidget {
   final int comicId;
@@ -42,54 +39,120 @@ class _ComicDetailScreen extends State<ComicDetailScreen> {
     return Column(
       children: [
         const SizedBox(height: 20),
-        Expanded(child: BlocBuilder<ComicsBloc, ComicsState>(
-          builder: (context, state) {
-            if (state is ComicDetailFetchSucess) {
-              return ListView.builder(
-                itemCount: state.comic.length,
-                itemBuilder: (context, index) {
-                  String image =
-                      "${state.comic[index].thumbnail.path}.${state.comic[index].thumbnail.extension}";
-                  return Padding(
-                    padding: const EdgeInsets.all(10.0),
-                    child: Container(
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: NetworkImage(image),
-                          fit: BoxFit.cover,
+        Expanded(
+          child: BlocBuilder<ComicsBloc, ComicsState>(
+            builder: (context, state) {
+              if (state is ComicDetailFetchSucess) {
+                return ListView.builder(
+                  itemCount: state.comic.length,
+                  itemBuilder: (context, index) {
+                    String image =
+                        "${state.comic[index].thumbnail!.path}.${state.comic[index].thumbnail!.extension}";
+                    return Padding(
+                      padding: const EdgeInsets.all(7.0),
+                      child: Card(
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15.0),
                         ),
-                        color: Colors.white.withOpacity(0.3),
-                      ),
-                      child: GFCard(
-                        title: GFListTile(
-                          avatar: GFAvatar(
-                            backgroundImage: NetworkImage(image),
+                        child: ClipRect(
+                          child: Stack(
+                            children: [
+                              const Center(
+                                child: CircularProgressIndicator(),
+                              ),
+                              Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(15.0),
+                                  image: DecorationImage(
+                                    image: NetworkImage(image),
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(15.0),
+                                    color: Colors.black.withOpacity(0.6),
+                                  ),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Stack(
+                                      children: [
+                                        Column(
+                                          children: [
+                                            ListTile(
+                                              title: Text(
+                                                state.comic[index].title!,
+                                                style: const TextStyle(
+                                                    color: Colors.white,
+                                                    fontWeight: FontWeight.bold,
+                                                    fontSize: 20),
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.all(16.0),
+                                              child: Text(
+                                                '${state.comic[index].title!} appears in  ${state.comic[index].creators} Creators',
+                                                style: const TextStyle(
+                                                    color: Colors.white),
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.all(16.0),
+                                              child: Text(
+                                                '${state.comic[index].title!} appears in  ${state.comic[index].series?.name} Series',
+                                                style: const TextStyle(
+                                                    color: Colors.white),
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.all(50.0),
+                                              child: Text(
+                                                state.comic[index]
+                                                            .description ==
+                                                        ""
+                                                    ? 'No description data'
+                                                    : state.comic[index]
+                                                        .description!,
+                                                style: const TextStyle(
+                                                  color: Colors.white,
+                                                ),
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.all(50.0),
+                                              child: Text(
+                                                'Resource URI: ${state.comic[index].resourceURI!}',
+                                                style: const TextStyle(
+                                                  color: Colors.white,
+                                                ),
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
-                          title: Text(state.comic[index].title),
-                        ),
-                        content: Column(
-                          children: <Widget>[
-                            Text(
-                              state.comic[index].characters.collectionURI == ""
-                                  ? 'No description data'
-                                  : state.comic[index].characters.collectionURI,
-                            ),
-                            Text(
-                                'Resource URI: ${state.comic[index].resourceURI!}')
-                          ],
                         ),
                       ),
-                    ),
-                  );
-                },
-              );
-            } else if (state is ComicsFetchError) {
-              return Text(state.errorMessage);
-            } else {
-              return const RefreshProgressIndicator();
-            }
-          },
-        ))
+                    );
+                  },
+                );
+              } else if (state is ComicsFetchError) {
+                return Text(state.errorMessage);
+              } else {
+                return const RefreshProgressIndicator();
+              }
+            },
+          ),
+        ),
       ],
     );
   }
