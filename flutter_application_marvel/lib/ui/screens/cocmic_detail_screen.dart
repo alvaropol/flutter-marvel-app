@@ -58,7 +58,7 @@ class _ComicDetailScreen extends State<ComicDetailScreen> {
                           image: NetworkImage(image),
                           fit: BoxFit.cover,
                         ),
-                        color: Colors.white.withOpacity(0.5),
+                        color: Colors.white.withOpacity(0.3),
                       ),
                       child: GFCard(
                         title: GFListTile(
