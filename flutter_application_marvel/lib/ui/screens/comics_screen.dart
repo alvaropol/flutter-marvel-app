@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_marvel/blocs/comics/comics_bloc.dart';
-import 'package:flutter_application_marvel/repositories/comics/comic_repository.dart';
-import 'package:flutter_application_marvel/repositories/comics/comic_repository_impl.dart';
 import 'package:flutter_application_marvel/ui/screens/cocmic_detail_screen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:getwidget/components/avatar/gf_avatar.dart';
 import 'package:getwidget/components/button/gf_button.dart';
 import 'package:getwidget/components/button/gf_button_bar.dart';
 import 'package:getwidget/components/card/gf_card.dart';
 import 'package:getwidget/components/list_tile/gf_list_tile.dart';
+import 'package:flutter_application_marvel/blocs/comics/comics_bloc.dart';
+import 'package:flutter_application_marvel/repositories/comics/comic_repository.dart';
+import 'package:flutter_application_marvel/repositories/comics/comic_repository_impl.dart';
+import 'package:getwidget/getwidget.dart';
 
 class ComicsScreen extends StatefulWidget {
   const ComicsScreen({super.key});
@@ -32,13 +32,14 @@ class _ComicsScreenState extends State<ComicsScreen> {
   @override
   Widget build(BuildContext context) {
     return BlocProvider.value(
-        value: _comicsBloc,
-        child: Scaffold(
-          appBar: AppBar(
-            title: const Text('Comics'),
-          ),
-          body: _comicList(),
-        ));
+      value: _comicsBloc,
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Comics'),
+        ),
+        body: _comicList(),
+      ),
+    );
   }
 
   Widget _comicList() {
@@ -74,20 +75,23 @@ class _ComicsScreenState extends State<ComicsScreen> {
                 itemCount: state.comicsList.length,
                 itemBuilder: (context, index) {
                   String image =
-                      "${state.comicsList[index].thumbnail!.path}.${state.comicsList[index].thumbnail!.extension}";
+                      "${state.comicsList[index].thumbnail.path}.${state.comicsList[index].thumbnail.extension}";
                   return Padding(
                     padding: const EdgeInsets.all(10.0),
                     child: Container(
                       decoration: BoxDecoration(
-                          image: DecorationImage(
-                              image: NetworkImage(image), fit: BoxFit.cover),
-                          color: Colors.white.withOpacity(0.5)),
+                        image: DecorationImage(
+                          image: NetworkImage(image),
+                          fit: BoxFit.cover,
+                        ),
+                        borderRadius: BorderRadius.circular(4),
+                        color: Colors.white.withOpacity(0.5),
+                      ),
                       child: GFCard(
+                        boxFit: BoxFit.cover,
+                        titlePosition: GFPosition.start,
                         title: GFListTile(
-                          avatar: GFAvatar(
-                            backgroundImage: NetworkImage(image),
-                          ),
-                          title: Text(state.comicsList[index].title!),
+                          titleText: state.comicsList[index].title,
                         ),
                         content: Text(
                             'Modified: ${state.comicsList[index].modified}'),
@@ -96,14 +100,17 @@ class _ComicsScreenState extends State<ComicsScreen> {
                             GFButton(
                               onPressed: () {
                                 Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => ComicDetailScreen(
-                                            comicId: state.comicsList[index].id,
-                                            comicTitle: state
-                                                .comicsList[index].title)));
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (context) => ComicDetailScreen(
+                                      comicId: state.comicsList[index].id,
+                                      comicTitle: state.comicsList[index].title,
+                                    ),
+                                  ),
+                                );
                               },
-                            )
+                              child: Text('View Details'),
+                            ),
                           ],
                         ),
                       ),
@@ -117,7 +124,7 @@ class _ComicsScreenState extends State<ComicsScreen> {
               return const RefreshProgressIndicator();
             }
           }),
-        )
+        ),
       ],
     );
   }

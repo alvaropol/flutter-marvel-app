@@ -49,7 +49,7 @@ class _ComicDetailScreen extends State<ComicDetailScreen> {
                 itemCount: state.comic.length,
                 itemBuilder: (context, index) {
                   String image =
-                      "${state.comic[index].thumbnail!.path}.${state.comic[index].thumbnail!.extension}";
+                      "${state.comic[index].thumbnail.path}.${state.comic[index].thumbnail.extension}";
                   return Padding(
                     padding: const EdgeInsets.all(10.0),
                     child: Container(
@@ -65,14 +65,14 @@ class _ComicDetailScreen extends State<ComicDetailScreen> {
                           avatar: GFAvatar(
                             backgroundImage: NetworkImage(image),
                           ),
-                          title: Text(state.comic[index].title!),
+                          title: Text(state.comic[index].title),
                         ),
                         content: Column(
                           children: <Widget>[
                             Text(
-                              state.comic[index].description == ""
+                              state.comic[index].characters.collectionURI == ""
                                   ? 'No description data'
-                                  : state.comic[index].description!,
+                                  : state.comic[index].characters.collectionURI,
                             ),
                             Text(
                                 'Resource URI: ${state.comic[index].resourceURI!}')
