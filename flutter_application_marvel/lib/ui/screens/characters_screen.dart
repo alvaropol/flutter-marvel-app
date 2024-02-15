@@ -88,113 +88,110 @@ class _CharactersScreenState extends State<CharactersScreen> {
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(15.0),
                         ),
-                        child: ClipRect(
-                          child: Stack(
-                            children: [
-                              const Center(
-                                child: CircularProgressIndicator(),
-                              ),
-                              Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(15.0),
-                                  image: DecorationImage(
-                                    image: NetworkImage(image),
-                                    fit: BoxFit.cover,
-                                  ),
+                        child: SizedBox(
+                          height: 400,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(15.0),
+                            child: Stack(
+                              children: [
+                                Image.network(
+                                  image,
+                                  fit: BoxFit.cover,
+                                  width: double.infinity,
+                                  height: double.infinity,
                                 ),
-                                child: Container(
+                                Container(
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(15.0),
                                     color: Colors.black.withOpacity(0.6),
                                   ),
                                   child: Padding(
                                     padding: const EdgeInsets.all(8.0),
-                                    child: Stack(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
-                                        Column(
-                                          children: [
-                                            ListTile(
-                                              title: Text(
-                                                state
-                                                    .characterList[index].name!,
-                                                style: const TextStyle(
-                                                  color: Colors.white,
-                                                  fontWeight: FontWeight.bold,
-                                                ),
-                                              ),
+                                        Expanded(
+                                          child: Text(
+                                            state.characterList[index].name!,
+                                            style: const TextStyle(
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.bold,
                                             ),
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.all(5.0),
-                                              child: Text(
-                                                '${state.characterList[index].name!} appears in  ${state.characterList[index].stories?.available} stories',
-                                                style: const TextStyle(
-                                                    color: Colors.white),
-                                              ),
+                                            maxLines: 2,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 5.0),
+                                          child: Flexible(
+                                            child: Text(
+                                              '${state.characterList[index].name!} appears in  ${state.characterList[index].stories?.available} stories',
+                                              style: const TextStyle(
+                                                  color: Colors.white),
+                                              maxLines: 3,
+                                              overflow: TextOverflow.ellipsis,
                                             ),
-                                            GestureDetector(
-                                              onTap: () {
-                                                String? wikiUrl = state
-                                                    .characterList[index]
-                                                    .urls?[2]
-                                                    .url;
-                                                if (wikiUrl != null) {
-                                                  launchUrl(wikiUrl as Uri);
-                                                }
-                                              },
-                                              child: const Text(
-                                                'Comics URL',
-                                                style: TextStyle(
-                                                  color: Colors.blue,
-                                                  decoration:
-                                                      TextDecoration.underline,
-                                                ),
-                                              ),
+                                          ),
+                                        ),
+                                        GestureDetector(
+                                          onTap: () {
+                                            String? wikiUrl = state
+                                                .characterList[index]
+                                                .urls?[2]
+                                                .url;
+                                            if (wikiUrl != null) {
+                                              launchUrl(wikiUrl as Uri);
+                                            }
+                                          },
+                                          child: const Text(
+                                            'Comics URL',
+                                            style: TextStyle(
+                                              color: Colors.blue,
+                                              decoration:
+                                                  TextDecoration.underline,
                                             ),
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.all(15.0),
-                                              child: ElevatedButton(
-                                                style: ButtonStyle(
-                                                    backgroundColor:
-                                                        MaterialStatePropertyAll(
-                                                            Colors.white
-                                                                .withOpacity(
-                                                                    0.7))),
-                                                onPressed: () {
-                                                  Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          DetailCharacterScreen(
-                                                        characterId: state
-                                                            .characterList[
-                                                                index]
-                                                            .id!,
-                                                        nameCharacter: state
-                                                            .characterList[
-                                                                index]
-                                                            .name!,
-                                                      ),
-                                                    ),
-                                                  );
-                                                },
-                                                child: const Text(
-                                                  'View details',
-                                                  style: TextStyle(
-                                                      color: Colors.black,
-                                                      fontSize: 14),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 15.0),
+                                          child: ElevatedButton(
+                                            style: ElevatedButton.styleFrom(
+                                              backgroundColor:
+                                                  Colors.white.withOpacity(0.7),
+                                            ),
+                                            onPressed: () {
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      DetailCharacterScreen(
+                                                    characterId: state
+                                                        .characterList[index]
+                                                        .id!,
+                                                    nameCharacter: state
+                                                        .characterList[index]
+                                                        .name!,
+                                                  ),
                                                 ),
-                                              ),
-                                            )
-                                          ],
+                                              );
+                                            },
+                                            child: const Text(
+                                              'View details',
+                                              style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 14),
+                                            ),
+                                          ),
                                         ),
                                       ],
                                     ),
                                   ),
                                 ),
-                              ),
-                            ],
+                              ],
+                            ),
                           ),
                         ),
                       ),
